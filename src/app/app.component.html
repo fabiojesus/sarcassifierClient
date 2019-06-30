@@ -1,0 +1,65 @@
+<div class="row pt-4 pb-2 pl-2 pr-2 mt-4 ml-4 mr-4" style="background-color:#ebfaeb; border-radius: 25px" >
+  <div class="col-4 pb-2 pl-4">
+    <span><h2>Sarcassifier</h2></span>
+  </div>
+  <div class="col-8 pb-2">
+    <form id="loginForm" class="float-right">
+        <label class="mr-2" >{{loginMessage}}</label>
+        <input id="loginUser" (value)="loginUser" (input)="loginUser = $event.target.value" placeholder="user" size="15" class="mr-2" style="background-color:#ffffff; border-radius: 5px"/> 
+        <input id="loginPassword" (value)="loginPassword" (input)="loginPassword = $event.target.value" type="password" placeholder="password" size="15" class="mr-2" style="background-color:#ffffff; border-radius: 5px"/>
+        <button id="loginBtn" class="btn btn-secondary"  (click)="loginAction()">{{logBtnLabel}}</button>
+    </form>
+  </div>
+</div>
+
+<div class="row w-75 mt-1 ml-4 pt-2 pb-2 pl-2 pr-2" style="background-color:#ffcccc; color:#cc2900; border-radius: 25px; " id="errorContainer">
+    <span style="text-align: right">{{errorMessage}}</span>
+</div>
+
+<div id="sarcasmCheckContainer">
+  <div class="row pt-4 pb-2 pl-2 pr-2 mt-4 ml-4 mr-4">
+    <div class="card" style ="margin-left:15%; width:70%;">
+      <div class="card-header">
+        <a data-toggle="collapse" href="#collapseFirst" role="button" aria-expanded="true" aria-controls="collapseFirst" style="color:black; text-decoration: none">
+          Check your comment for sarcasm
+        </a>
+      </div>
+      <div class="card-body collapse show" id="collapseFirst">
+        <textarea class="w-100" rows="8" (value)="textToClassify" (input)="textToClassify = $event.target.value" placeholder="Insert your comment here"></textarea>
+      </div>
+      <div class="card-footer">
+        <label class="text-info">{{sarcasmLabel}}</label>
+        <button (click)="checkForSarcasm()" class="btn btn-success">Check for sarcasm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addDocumentContainer">
+  <div class="row pt-4 pb-2 pl-2 pr-2 mt-4 ml-4 mr-4">
+    <div class="card" style ="margin-left:15%; width:70%;">
+      <div class="card-header">
+        <a data-toggle="collapse" href="#collapseFirst" role="button" aria-expanded="true" aria-controls="collapseFirst" style="color:black; text-decoration: none">
+          Add document to training set
+        </a>
+      </div>
+      <div class="card-body collapse show" id="collapseFirst">
+        <textarea class="w-100" rows="8" (value)="textToAdd" (input)="textToAdd = $event.target.value" placeholder="Insert your comment here"></textarea>
+      </div>
+      <div class="card-footer">
+        <label class="text-info">{{addResultLabel}}</label>
+        <button (click)="addDocument()" class="btn btn-success">Add document</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="adminToolsContainer">
+  
+</div>
+
+
+
+
+
