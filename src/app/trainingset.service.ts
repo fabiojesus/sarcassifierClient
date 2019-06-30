@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,40 +7,51 @@ import { HttpClient } from '@angular/common/http';
 
 
 export class TrainingsetService {
-  trainingsetUrl = 'https://sarcassifier.herokuapp.com/trainingset'; //OK
-  trainUrl = 'https://sarcassifier.herokuapp.com/train'; //OK
-  lastTrainUrl = 'https://sarcassifier.herokuapp.com/lastTrain'; //OK
-  userUrl = 'https://sarcassifier.herokuapp.com/login'; //OK
-  classifyUrl = 'https://sarcassifier.herokuapp.com/classify'; //OK
-  statsUrl = 'https://sarcassifier.herokuapp.com/stats'; //OK
-  removeStopWordsUrl = 'https://sarcassifier.herokuapp.com/removeStopWords'; //OK
-  cleanUrl = 'https://sarcassifier.herokuapp.com/clean'; //OK
-  ngramUrl = 'https://sarcassifier.herokuapp.com/ngram'; //OK
-  tfUrl = 'https://sarcassifier.herokuapp.com/tf'; //OK
-  stemUrl = 'https://sarcassifier.herokuapp.com/stem'; //OK
-  bagOfWordsUrl = 'https://sarcassifier.herokuapp.com/bow'; //OK
-  idfUrl = 'https://sarcassifier.herokuapp.com/idf'; //OK
-  tfidfUrl = 'https://sarcassifier.herokuapp.com/tfidf';//OK
-  binaryVectorUrl = 'https://sarcassifier.herokuapp.com/binaryVector'; //OK
-  numberofOcurrencesVectorUrl = 'https://sarcassifier.herokuapp.com/numberofOcurrencesVector'; //OK
-  tfVectorUrl = 'https://sarcassifier.herokuapp.com/tfVector'; //OK
-  tfIdfVectorUrl = 'https://sarcassifier.herokuapp.com/tfidfVector'; //OK
-  euclidianUrl = 'https://sarcassifier.herokuapp.com/euclidean';
-  cossenoUrl = 'https://sarcassifier.herokuapp.com/cosseno';
-  precisionUrl = 'https://sarcassifier.herokuapp.com/precision';
-  recallUrl = 'https://sarcassifier.herokuapp.com/recall';
-  fmeasureUrl = 'https://sarcassifier.herokuapp.com/fmeasure';
-  sentimentUrl = 'https://sarcassifier.herokuapp.com/sentiment';
-  addDocumentUrl = 'https://sarcassifier.herokuapp.com/addDocument'; //OK
+
+  //url = 'https://sarcassifier.herokuapp.com/';
+  url = "http://localhost:3000/";
+  
+  userendpoint = 'login'; 
+  
+  
+  trainingsetendpoint = 'trainingset'; 
+  trainendpoint = 'train'; 
+  lastTrainendpoint = 'lastTrain'; 
+  classifyendpoint = 'classify'; 
+  statsendpoint = 'stats'; 
+  removeStopWordsendpoint = 'removeStopWords'; 
+  cleanendpoint = 'clean'; 
+  ngramendpoint = 'ngram'; 
+  tfendpoint = 'tf'; 
+  stemendpoint = 'stem'; 
+  bagOfWordsendpoint = 'bow'; 
+  idfendpoint = 'idf'; 
+  tfidfendpoint = 'tfidf';
+  binaryVectorendpoint = 'binaryVector'; 
+  numberofOcurrencesVectorendpoint = 'numberofOcurrencesVector'; 
+  tfVectorendpoint = 'tfVector'; 
+  tfIdfVectorendpoint = 'tfidfVector'; 
+  euclidianendpoint = 'euclidean';
+  cossenoendpoint = 'cosseno';
+  precisionendpoint = 'precision';
+  recallendpoint = 'recall';
+  fmeasureendpoint = 'fmeasure';
+  sentimentendpoint = 'sentiment';
+  addDocumentendpoint = 'addDocument'; 
 
   constructor(private http: HttpClient) { }
-
-  getTrainingSet(user){
+  
+  GetUser(userData){
     return new Promise((resolve, reject)=>{
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('user', user);
-      this.http.get(this.trainingsetUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.userendpoint, {params:{user:JSON.stringify(userData)}}).subscribe(data => resolve(data), err => reject(err));
+    });
+  }
+
+
+
+  getTrainingSet(userData){
+    return new Promise((resolve, reject)=>{
+      this.http.get(this.url+this.trainingsetendpoint, {params:{user:JSON.stringify(userData)}}).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -49,7 +60,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('user', user);
-      this.http.get(this.trainUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.trainendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -58,25 +69,18 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('user', user);
-      this.http.get(this.lastTrainUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.lastTrainendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
-  GetUser(user){
-    return new Promise((resolve, reject)=>{
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('user', user);
-      this.http.get(this.userUrl).subscribe(data => resolve(data), err => reject(err));
-    });
-  }
+  
 
   Classify(comment){
     return new Promise((resolve, reject)=>{
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('comment', comment);
-      this.http.get(this.classifyUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.classifyendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -86,7 +90,7 @@ export class TrainingsetService {
       headers.append('Content-Type', 'application/json');
       headers.append('comment', comment);
       headers.append('classification', classification);
-      this.http.get(this.addDocumentUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.addDocumentendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -95,7 +99,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('user', user);
-      this.http.get(this.classifyUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.classifyendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -104,7 +108,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('comment', comment);
-      this.http.get(this.removeStopWordsUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.removeStopWordsendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -113,7 +117,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('comment', comment);
-      this.http.get(this.cleanUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.cleanendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -123,7 +127,7 @@ export class TrainingsetService {
       headers.append('Content-Type', 'application/json');
       headers.append('comment', comment);
       headers.append('n', n);
-      this.http.get(this.cleanUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.cleanendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -132,7 +136,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('word', word);
-      this.http.get(this.stemUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.stemendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -141,7 +145,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.bagOfWordsUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.bagOfWordsendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -152,7 +156,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.tfUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.tfendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -161,7 +165,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.idfUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.idfendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -170,7 +174,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.tfidfUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.tfidfendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -179,7 +183,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.binaryVectorUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.binaryVectorendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -188,7 +192,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.numberofOcurrencesVectorUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.numberofOcurrencesVectorendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -197,7 +201,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.tfVectorUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.tfVectorendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -207,7 +211,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.tfIdfVectorUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.tfIdfVectorendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -217,7 +221,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.precisionUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.precisionendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -226,7 +230,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.recallUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.recallendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -236,7 +240,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.fmeasureUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.fmeasureendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -247,7 +251,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.sentimentUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.sentimentendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -256,7 +260,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.cossenoUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.cossenoendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 
@@ -266,7 +270,7 @@ export class TrainingsetService {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('text', text);
-      this.http.get(this.euclidianUrl).subscribe(data => resolve(data), err => reject(err));
+      this.http.get(this.url+this.euclidianendpoint).subscribe(data => resolve(data), err => reject(err));
     });
   }
 }

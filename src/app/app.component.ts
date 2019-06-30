@@ -78,9 +78,21 @@ constructor(private trainingSetService: TrainingsetService){}
     {
       this.hideError();
       if(this.getLoggedUser()== null || this.getLoggedUser() == ""){
-        
-        this.setLoggedUser(this.loginUser+":"+this.loginPassword);
-        this.setLoginWhenLogged();
+        var user = {name:this.loginUser, password:this.loginPassword};
+        this.trainingSetService.GetUser(user)
+                               .catch(err => this.showError(err))
+                               .then(data => {
+                                 console.log(data);
+                                    if(data["err"] == -1)
+                                    {
+                                      this.showError(data["message"]);
+                                    }
+                                    else
+                                    {
+                                      this.setLoggedUser = data["data"];
+                                      this.setLoginWhenLogged();
+                                    }
+                               });
       }
       else
       {
@@ -98,9 +110,8 @@ constructor(private trainingSetService: TrainingsetService){}
     addResultLabel;
     checkForSarcasm()
     {
-      console.log("hi");
-      var user = "u";
-      this.trainingSetService.getTrainingSet(user).then(res => console.log(res)).catch(err => console.log(err))
+      var user = {name:"admin", password:"admin"};
+      this.trainingSetService.GetUser(user).then(res => console.log(res)).catch(err => console.log(err))
     }
     
   //Check for sarcasm
